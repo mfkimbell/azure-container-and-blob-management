@@ -12,14 +12,17 @@ namespace AzureBlobProject.Services
         {
             _blobClient = blobClient;
         }
-        public Task CreateContainer(string containerName)
+        public async Task CreateContainer(string containerName)
         {
-            throw new NotImplementedException();
+            BlobContainerClient blobContainerClient = _blobClient.GetBlobContainerClient(containerName);
+            await blobContainerClient.CreateIfNotExistsAsync(PublicAccessType.BlobContainer);
         }
 
-        public Task DeleteContainer(string containerName)
+        public async Task DeleteContainer(string containerName)
         {
-            throw new NotImplementedException();
+            BlobContainerClient blobContainerClient = _blobClient.GetBlobContainerClient(containerName);
+            await blobContainerClient.DeleteIfExistsAsync();
+
         }
 
         public Task<List<string>> GetAllContainerAndBlobs()
@@ -33,8 +36,10 @@ namespace AzureBlobProject.Services
 
             await foreach(BlobContainerItem blobContainerItem in _blobClient.GetBlobContainersAsync())
             {
-
+                containerName.Add(blobContainerItem.Name);
             }
+
+            return containerName;
         }
     }
 }
