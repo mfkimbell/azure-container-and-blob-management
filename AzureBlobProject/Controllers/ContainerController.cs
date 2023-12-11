@@ -1,4 +1,5 @@
-﻿using AzureBlobProject.Services;
+﻿using AzureBlobProject.Models;
+using AzureBlobProject.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AzureBlobProject.Controllers
@@ -15,6 +16,21 @@ namespace AzureBlobProject.Controllers
         {
             var allContainer = await _containerService.GetAllContainers();
             return View(allContainer);
+        }
+        public async Task<IActionResult> Delete(string containerName)
+        {
+            await _containerService.DeleteContainer(containerName);
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> Create()
+        {
+            return View(new Container());
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(Container container)
+        {
+            await _containerService.CreateContainer(container.Name);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

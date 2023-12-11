@@ -1,6 +1,7 @@
 ﻿
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace AzureBlobProject.Services
 {
@@ -25,9 +26,18 @@ namespace AzureBlobProject.Services
 
         }
 
-        public Task<List<string>> GetAllContainerAndBlobs()
+        public async Task<List<string>> GetAllContainerAndBlobs()
         {
-            throw new NotImplementedException();
+            List<string> containerNamesAndBlobNames = new();
+            containerNamesAndBlobNames.Add("Account Name : " + _blobClient.AccountName);
+            containerNamesAndBlobNames.Add("-------------------------------------------------------------");
+            await foreach (BlobContainerItem blobContainerItem in _blobClient.GetBlobContainersAsync())
+            {
+                containerNamesAndBlobNames.Add("--" + blobContainerItem.Name);
+                BlobContainerClient _blobContainer =
+                    _blobClient.GetBlobContainerClient(blobContainerItem.Name);
+
+            }
         }
 
         public async Task<List<string>> GetAllContainers()
