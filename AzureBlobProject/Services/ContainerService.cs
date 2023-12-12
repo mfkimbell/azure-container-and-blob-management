@@ -30,14 +30,20 @@ namespace AzureBlobProject.Services
         {
             List<string> containerNamesAndBlobNames = new();
             containerNamesAndBlobNames.Add("Account Name : " + _blobClient.AccountName);
-            containerNamesAndBlobNames.Add("-------------------------------------------------------------");
+            containerNamesAndBlobNames.Add("---------------------------------------------------------------------");
             await foreach (BlobContainerItem blobContainerItem in _blobClient.GetBlobContainersAsync())
             {
                 containerNamesAndBlobNames.Add("--" + blobContainerItem.Name);
                 BlobContainerClient _blobContainer =
                     _blobClient.GetBlobContainerClient(blobContainerItem.Name);
+                await foreach (BlobItem blobItem in _blobContainer.GetBlobsAsync())
+                {
+                    containerNamesAndBlobNames.Add("------"+blobItem.Name);
+                }
+                containerNamesAndBlobNames.Add("---------------------------------------------------------------------");
 
             }
+            return containerNamesAndBlobNames;
         }
 
         public async Task<List<string>> GetAllContainers()
