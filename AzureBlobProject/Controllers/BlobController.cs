@@ -1,5 +1,6 @@
 ﻿using AzureBlobProject.Services;
 using Microsoft.AspNetCore.Mvc;
+using AzureBlobProject.Models;
 
 namespace AzureBlobProject.Controllers
 {
@@ -25,7 +26,7 @@ namespace AzureBlobProject.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> AddFile(string containerName, IFormFile file)
+        public async Task<IActionResult> AddFile(string containerName, Blob blob, IFormFile file)
         {
             if (file == null || file.Length < 1) 
             {
@@ -35,7 +36,7 @@ namespace AzureBlobProject.Controllers
             // new file name - xps_img2_GUIDHERE.png, so if an upload has the same file name, it doesn't overwrite
             var fileName = Path.GetFileNameWithoutExtension(file.FileName)+"_"+Guid.NewGuid()+Path.GetExtension(file.FileName);
 
-            var result = await _blobService.UploadBlob(fileName, file, containerName);
+            var result = await _blobService.UploadBlob(fileName, file, containerName, blob);
 
             if (result)
             {
