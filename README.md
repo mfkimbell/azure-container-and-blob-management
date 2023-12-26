@@ -49,7 +49,8 @@ await foreach (BlobItem blobItem in _blobContainer.GetBlobsAsync())
 
 When "container" is selected, 
 
-![image](https://github.com/mfkimbell/azure-container-and-blob-management/assets/107063397/08fcae88-fafb-436a-87af-fd7ca89315eb)
+
+<img width="609" alt="Screenshot 2023-11-26 at 12 07 45 PM" src="https://github.com/mfkimbell/azure-container-and-blob-management/assets/107063397/08fcae88-fafb-436a-87af-fd7ca89315eb">
 
 
 In index.cshtml, we have buttons that do “asp-actions” and they lead to functions in the "asp-controller" designated controller. 
@@ -59,43 +60,17 @@ The controller will return a “view” with the data passed in, and our fronten
 We create interfaces for blobService and containerService to outline basic commands like “get all blobs” “get one blob” “delete blob” etc…
 We make “blobService.cs” and “containerService.cs” with functions that will make our controller’s code more clean and simple.
 
-We implement views for each of the controller’s functions to update the screen with new info. Using these functions, CRUD functions, I can alter data on Azure account with code.
+We implement views for each of the controller’s functions to update the screen with new info. Using these functions, CRUD functions, I can alter data on Azure account with code. The functions execute, then the view is refrehsed with the updated data.
 
 
+Files receive a hash when inputted to prevent overwriting of duplicate names:
+
+``` C#
+ var fileName = Path.GetFileNameWithoutExtension(file.FileName)+"_"+Guid.NewGuid()+Path.GetExtension(file.FileName);
+```
 
 
-
-
-Files receive a hash when inputted to prevent overwriting of duplicate names
-
-All actions in the html lead to routes in the controller where information is retrieved, updated, and a new view is pre-rendered. 
-
-
-You can manually add meta data to blobs manually on Azure. 
-
-We display the images in the images tab with the public URI, this doesn’t work on privagte containers (obviously), but we can use a shared access token to get the URI
-
-
-NEW PROJECT FOR THIS, NEW HOME CONTROLLER
-
-Azure function also in its own project
-
-Our azure function sends a sales request to a queue
-
-We make the trigger an HTTP, and copy the http executable
-
-We use that http in the home controller, where we create a “post action method”
-
-
-
-
-![image](https://github.com/mfkimbell/azure-fundamentals/assets/107063397/0581b1ab-dbe8-4e8a-825d-59f53e9b6702)
-
-generate shared access token
-
-![image](https://github.com/mfkimbell/azure-fundamentals/assets/107063397/2d3559ac-bf80-4491-9d44-cedf7c9fffd7)
-
-same action through code, we add the access token string to the end of the URI
+We display the images in the images tab with the public URI, this doesn’t work on privagte containers (obviously), but we can use a shared access signature (SAS) to get a working URI. Currently the images is hardcoded to a single container (not shown below). 
 
 ``` c#
 string sasContainerSignature = "";
@@ -123,4 +98,33 @@ await foreach (var item in blobs)
     };
 ```
 
+To to add comment and title, we specify meta data on the blob object upon creation:
+
+``` c#
+ BlobProperties blobProperties = await blobClient.GetPropertiesAsync();
+                if (blobProperties.Metadata.ContainsKey("title"))
+                {
+                    blobIndividual.Title = blobProperties.Metadata["title"];
+                }
+                if (blobProperties.Metadata.ContainsKey("comment"))
+                {
+                    blobIndividual.Comment = blobProperties.Metadata["comment"];
+                }
+                blobList.Add(blobIndividual);
+            }
+            return blobList;
+```
+And we reuse that metadata when displaying titiles in the file heiarchy and in the images page:
+
+``` c#
+<div class="row">
+        @foreach(var item in Model)
+        {
+            <div class="col-4 border p-2">
+                <h4 class="text-success">@item.Title</h4>
+                <img src="@item.Uri" width="100%" />
+			</div>
+        }
+    </div>
+```
 
