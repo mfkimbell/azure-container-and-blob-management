@@ -89,7 +89,7 @@ Files receive a hash when inputted to prevent overwriting of duplicate names:
 ```
 
 
-We display the images in the images tab with the public URI, this doesn’t work on privagte containers (obviously), but we can use a shared access signature (SAS) to get a working URI. Currently the images is hardcoded to a single container (not shown below). 
+We display the images in the images tab with the public URI, this doesn’t work on privagte containers (obviously), but we can use a shared access signature (SAS) to get a working URI.
 
 ``` c#
 string sasContainerSignature = "";
