@@ -59,7 +59,9 @@ The controller will return a “view” with the data passed in, and our fronten
 We create interfaces for blobService and containerService to outline basic commands like “get all blobs” “get one blob” “delete blob” etc…
 We make “blobService.cs” and “containerService.cs” with functions that will make our controller’s code more clean and simple.
 
-We implement views for each of the controller’s functions to update the screen with new info.
+We implement views for each of the controller’s functions to update the screen with new info. Using these functions, CRUD functions, I can alter data on Azure account with code.
+
+
 
 
 
