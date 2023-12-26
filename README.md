@@ -12,7 +12,26 @@
 ### Purpose:
 The purpose of this application is to edit, add, and delete containers and blobs on Azure from a .Net application, as well as display images from a specified container. 
 
-### Overview:
+
+
+#### Add Blob
+<img width="680" alt="Screenshot 2023-11-26 at 12 07 45 PM" src="https://github.com/mfkimbell/azure-container-and-blob-management/assets/107063397/bf532908-0d7f-40ab-8388-300372212709">
+
+#### Delete Blob
+![deleteBlob](https://github.com/mfkimbell/azure-container-and-blob-management/assets/107063397/dba09275-0b31-41e7-8b00-2200458a54f5)
+
+#### Create Container
+<img width="680" alt="Screenshot 2023-11-26 at 12 07 45 PM" src="https://github.com/mfkimbell/azure-container-and-blob-management/assets/107063397/0d431bb3-4cf0-4b19-943e-11f679dec7e8">
+
+#### Delete Container
+<img width="680" alt="Screenshot 2023-11-26 at 12 07 45 PM" src="https://github.com/mfkimbell/azure-container-and-blob-management/assets/107063397/01b35695-f7f4-40fe-a374-c0d926af33ac">
+
+#### Metadata Display
+<img width="680" alt="Screenshot 2023-11-26 at 12 07 45 PM" src="https://github.com/mfkimbell/azure-container-and-blob-management/assets/107063397/7fd1b5fd-eb7a-4200-b75c-8487a87d216b">
+
+
+
+
 
 We use blobServiceClient C# package to manage, delete, and add containers. 
 
